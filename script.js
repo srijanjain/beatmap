@@ -22,9 +22,9 @@ const loadPlaces = function (coords) {
 // getting places from REST APIs
 function loadPlaceFromAPIs(position) {
     const params = {
-        radius: 300,    // search places not farther than this value (in meters)
-        clientId: 'HZIJGI4COHQ4AI45QXKCDFJWFJ1SFHYDFCCWKPIJDWHLVQVZ',
-        clientSecret: 'GYRKWWJMO2WK3KIRWBXIN5FQAWXTVFIK2QM4VQWNQ4TRAKWH',
+        radius: 100,    // search places not farther than this value (in meters)
+        clientId: 'AMU3ET4RIZQYFTDCNQWILHJGE0T4VOXM2UPPNHYYUTCVIG5N',
+        clientSecret: 'GPLDOJJ12CSCKQLXHZCCVSJN5H1LSVSOZYCG4SKDEECSWZBE',
         version: '20300101',    // foursquare versioning, required but unuseful for this demo
     };
 
@@ -70,7 +70,7 @@ window.onload = () => {
                     text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
                     text.setAttribute('title', place.name);
                     text.setAttribute('href', 'http://www.example.com/');
-                    text.setAttribute('scale', '13 13 13');
+                    text.setAttribute('scale', '25 25 25');
 
                     text.addEventListener('loaded', () => {
                         window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
