@@ -50,12 +50,12 @@ window.onload = () => {
                     placeText.setAttribute('scale', '40 40 40');
                     
                     placeText.addEventListener('loaded', () => {
-                        window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'));
-                        window.open("www.google.com");
+                        window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
                     });
 
-                    this.el.addEventListener('click', function (evt) {
+                    placeText.addEventListener('click', function (evt) {
                         console.log(evt.detail.intersection.point);
+                        window.open("www.google.com");
                       });
 
                     const clickListener = function (ev) {
