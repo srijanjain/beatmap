@@ -1,4 +1,5 @@
 # BeatMap
+
 Permissions:
 - Camera 
 - Location
