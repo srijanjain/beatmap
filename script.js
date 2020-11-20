@@ -68,6 +68,7 @@ window.onload = () => {
                         if (el && el === ev.target) {
                             // after click, we are adding a label with the name of the place
                             window.open("www.google.com");
+                            el.closest( 'a:www.google.com' );
                             
                             // const label = document.createElement('span');
                             // const container = document.createElement('div');
