@@ -51,8 +51,12 @@ window.onload = () => {
                     
                     placeText.addEventListener('loaded', () => {
                         window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
-                        window.open(www.google.com);
+                        window.open("www.google.com");
                     });
+
+                    this.el.addEventListener('click', function (evt) {
+                        console.log(evt.detail.intersection.point);
+                      });
 
                     const clickListener = function (ev) {
                         ev.stopPropagation();
