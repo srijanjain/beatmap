@@ -76,6 +76,7 @@ window.onload = () => {
                             //     container.parentElement.removeChild(container);
                             // }, 1500);
                          }
+                         window.open("www.google.com");
                         };
 
                     scene.appendChild(placeText);
