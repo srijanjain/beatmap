@@ -50,7 +50,7 @@ window.onload = () => {
                     placeText.setAttribute('scale', '40 40 40');
                     
                     placeText.addEventListener('loaded', () => {
-                        window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
+                        window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'));
                         window.open("www.google.com");
                     });
 
