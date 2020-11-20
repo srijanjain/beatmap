@@ -1,73 +1,22 @@
-window.onload = () => {
-    let method = 'dynamic';
-
-    // if you want to statically add places, de-comment following line
-    // method = 'static';
-
-    if (method === 'static') {
-        let places = staticLoadPlaces();
-        renderPlaces(places);
-    }
-
-    if (method !== 'static') {
-
-        // first get current user location
-        return navigator.geolocation.getCurrentPosition(function (position) {
-
-            // than use it to load from remote APIs some places nearby
-            dynamicLoadPlaces(position.coords)
-                .then((places) => {
-                    renderPlaces(places);
-                })
-        },
-            (err) => console.error('Error in retrieving position', err),
-            {
-                enableHighAccuracy: true,
-                maximumAge: 0,
-                timeout: 27000,
-            }
-        );
-    }
-};
-
-function staticLoadPlaces() {
-    return [
-        {
-            name: "Your place name",
-            location: {
-                lat: 0, // add here latitude if using static data
-                lng: 0, // add here longitude if using static data
-            }
-        },
-        {
-            name: 'Another place name',
-            location: {
-                lat: 0,
-                lng: 0,
-            }
-        }
-    ];
-}
-
-// getting places from REST APIs
-function dynamicLoadPlaces(position) {
-    let params = {
+// getting places from APIs
+function loadPlaces(position) {
+    const params = {
         radius: 300,    // search places not farther than this value (in meters)
-        clientId: 'AMU3ET4RIZQYFTDCNQWILHJGE0T4VOXM2UPPNHYYUTCVIG5N',   // add your credentials here
-        clientSecret: 'GPLDOJJ12CSCKQLXHZCCVSJN5H1LSVSOZYCG4SKDEECSWZBE',   // add your credentials here
+        clientId: '<YOUR-CLIENT-ID>',
+        clientSecret: 'YOUR-CLIENT-SECRET',
         version: '20300101',    // foursquare versioning, required but unuseful for this demo
     };
 
     // CORS Proxy to avoid CORS problems
-    let corsProxy = 'https://cors-anywhere.herokuapp.com/';
+    const corsProxy = 'https://cors-anywhere.herokuapp.com/';
 
-    // Foursquare API
-    let endpoint = `${corsProxy}https://api.foursquare.com/v2/venues/search?intent=checkin
+    // Foursquare API (limit param: number of maximum places to fetch)
+    const endpoint = `${corsProxy}https://api.foursquare.com/v2/venues/search?intent=checkin
         &ll=${position.latitude},${position.longitude}
         &radius=${params.radius}
         &client_id=${params.clientId}
         &client_secret=${params.clientSecret}
-        &limit=15
+        &limit=30 
         &v=${params.version}`;
     return fetch(endpoint)
         .then((res) => {
@@ -81,48 +30,60 @@ function dynamicLoadPlaces(position) {
         })
 };
 
-function renderPlaces(places) {
-    let scene = document.querySelector('a-scene');
 
-    places.forEach((place) => {
-        const latitude = place.location.lat;
-        const longitude = place.location.lng;
+window.onload = () => {
+    const scene = document.querySelector('a-scene');
 
-        // add place icon
-        const icon = document.createElement('a-image');
-        icon.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude}`);
-        icon.setAttribute('name', place.name);
-        icon.setAttribute('src', '../assets/map-marker.png');
+    // first get current user location
+    return navigator.geolocation.getCurrentPosition(function (position) {
 
-        // for debug purposes, just show in a bigger scale, otherwise I have to personally go on places...
-        icon.setAttribute('scale', '20, 20');
+        // than use it to load from remote APIs some places nearby
+        loadPlaces(position.coords)
+            .then((places) => {
+                places.forEach((place) => {
+                    const latitude = place.location.lat;
+                    const longitude = place.location.lng;
 
-        icon.addEventListener('loaded', () => window.dispatchEvent(new CustomEvent('gps-entity-place-loaded')));
+                    // add place name
+                    const placeText = document.createElement('a-link');
+                    placeText.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
+                    placeText.setAttribute('title', place.name);
+                    placeText.setAttribute('scale', '15 15 15');
+                    
+                    placeText.addEventListener('loaded', () => { window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))});
 
-        const clickListener = function (ev) {
-            ev.stopPropagation();
-            ev.preventDefault();
+                    const clickListener = function (ev) {
+                      ev.stopPropagation();
+                      ev.preventDefault();
 
-            const name = ev.target.getAttribute('name');
+                      const name = ev.target.getAttribute('name');
+                      const el = ev.detail.intersection && ev.detail.intersection.object.el;
 
-            const el = ev.detail.intersection && ev.detail.intersection.object.el;
+                      if (el && el === ev.target) {
+                          // after click, we are adding a label with the name of the place
+                          const label = document.createElement('span');
+                          const container = document.createElement('div');
+                          container.setAttribute('id', 'place-label');
+                          label.innerText = name;
+                          container.appendChild(label);
+                          document.body.appendChild(container);
 
-            if (el && el === ev.target) {
-                const label = document.createElement('span');
-                const container = document.createElement('div');
-                container.setAttribute('id', 'place-label');
-                label.innerText = name;
-                container.appendChild(label);
-                document.body.appendChild(container);
+                          setTimeout(() => {
+                              // that will disappear after less than 2 seconds
+                              container.parentElement.removeChild(container);
+                          }, 1500);
+                       }
+                      };
 
-                setTimeout(() => {
-                    container.parentElement.removeChild(container);
-                }, 1500);
-            }
-        };
-
-        icon.addEventListener('click', clickListener);
-
-        scene.appendChild(icon);
-    });
-}
+                    scene.appendChild(placeText);
+                });
+            })
+    },
+        (err) => console.error('Error in retrieving position', err),
+        {
+            enableHighAccuracy: true,
+            maximumAge: 0,
+            timeout: 27000,
+        }
+    );
+};
