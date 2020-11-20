@@ -1,13 +1,13 @@
 const loadPlaces = function (coords) {
-    // COMMENT FOLLOWING LINE IF YOU WANT TO USE STATIC DATA AND ADD COORDINATES IN THE FOLLOWING 'PLACES' ARRAY
-    const method = 'api';
+
+    const method = 'api';     // COMMENT LINE IF STATIC DATA AND ADD COORDINATES IN THE FOLLOWING 'PLACES' ARRAY
 
     const PLACES = [
         {
             name: "Your place name",
             location: {
-                lat: 0, // add here latitude if using static data
-                lng: 0, // add here longitude if using static data
+                lat: 0, // latitude if using static data
+                lng: 0, // longitude if using static data
             }
         },
     ];
@@ -28,10 +28,10 @@ function loadPlaceFromAPIs(position) {
         version: '20300101',    // foursquare versioning, required but unuseful for this demo
     };
 
-    // CORS Proxy to avoid CORS problems
+    // CORS Proxy
     const corsProxy = 'https://cors-anywhere.herokuapp.com/';
 
-    // Foursquare API
+    // Foursquare API for locations of interest
     const endpoint = `${corsProxy}https://api.foursquare.com/v2/venues/search?intent=checkin
         &ll=${position.latitude},${position.longitude}
         &radius=${params.radius}
@@ -55,10 +55,10 @@ function loadPlaceFromAPIs(position) {
 window.onload = () => {
     const scene = document.querySelector('a-scene');
 
-    // first get current user location
+    // Getting current user location
     return navigator.geolocation.getCurrentPosition(function (position) {
 
-        // than use it to load from remote APIs some places nearby
+        // Using current location to load from remote APIs some places nearby
         loadPlaces(position.coords)
             .then((places) => {
                 places.forEach((place) => {
@@ -71,11 +71,9 @@ window.onload = () => {
                     text.setAttribute('title', place.name);
                     text.setAttribute('href', 'https://www.google.com/');
                     text.setAttribute('scale', '25 25 25');
-
                     text.addEventListener('loaded', () => {
                         window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
                     });
-
                     scene.appendChild(text);
                 });
             })
