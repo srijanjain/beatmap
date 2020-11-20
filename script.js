@@ -1,4 +1,26 @@
-function loadPlaces(position) {
+const loadPlaces = function (coords) {
+    // COMMENT FOLLOWING LINE IF YOU WANT TO USE STATIC DATA AND ADD COORDINATES IN THE FOLLOWING 'PLACES' ARRAY
+    // const method = 'api';
+
+//     const PLACES = [
+//         {
+//             name: "Your place name",
+//             location: {
+//                 lat: 0, // add here latitude if using static data
+//                 lng: 0, // add here longitude if using static data
+//             }
+//         },
+//     ];
+
+//     if (method === 'api') {
+//         return loadPlaceFromAPIs(coords);
+//     }
+
+//     return Promise.resolve(PLACES);
+// };
+
+// getting places from REST APIs
+function loadPlaceFromAPIs(position) {
     const params = {
         radius: 300,    // search places not farther than this value (in meters)
         clientId: 'AMU3ET4RIZQYFTDCNQWILHJGE0T4VOXM2UPPNHYYUTCVIG5N',
@@ -9,13 +31,13 @@ function loadPlaces(position) {
     // CORS Proxy to avoid CORS problems
     const corsProxy = 'https://cors-anywhere.herokuapp.com/';
 
-    // Foursquare API (limit param: number of maximum places to fetch)
+    // Foursquare API
     const endpoint = `${corsProxy}https://api.foursquare.com/v2/venues/search?intent=checkin
         &ll=${position.latitude},${position.longitude}
         &radius=${params.radius}
         &client_id=${params.clientId}
         &client_secret=${params.clientSecret}
-        &limit=30 
+        &limit=15
         &v=${params.version}`;
     return fetch(endpoint)
         .then((res) => {
@@ -44,48 +66,17 @@ window.onload = () => {
                     const longitude = place.location.lng;
 
                     // add place name
-                    const placeText = document.createElement('a-link');
-                    placeText.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
-                    placeText.setAttribute('title', place.name);
-                    placeText.setAttribute('scale', '40 40 40');
-                    
-                    placeText.addEventListener('loaded', () => {
+                    const text = document.createElement('a-link');
+                    text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
+                    text.setAttribute('title', place.name);
+                    text.setAttribute('href', 'http://www.srijanja.in/');
+                    text.setAttribute('scale', '20 20 20');
+
+                    text.addEventListener('loaded', () => {
                         window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
                     });
 
-                    // placeText.addEventListener('click', function (evt) {
-                    //     console.log(evt.detail.intersection.point);
-                    //     window.open("www.google.com");
-                    //   });
-
-                    const clickListener = function (ev) {
-                        ev.stopPropagation();
-                        ev.preventDefault();
-  
-                        const name = ev.target.getAttribute('name');
-                        const el = ev.detail.intersection && ev.detail.intersection.object.el;
-  
-                        if (el && el === ev.target) {
-                            // after click, we are adding a label with the name of the place
-                            window.open("www.google.com");
-                            el.closest( 'a:www.google.com' );
-                            
-                            // const label = document.createElement('span');
-                            // const container = document.createElement('div');
-                            // container.setAttribute('id', 'place-label');
-                            // label.innerText = name;
-                            // container.appendChild(label);
-                            // document.body.appendChild(container);
-                            // 
-                            // setTimeout(() => {
-                            //     // that will disappear after less than 2 seconds
-                            //     container.parentElement.removeChild(container);
-                            // }, 1500);
-                         }
-                         window.open("www.google.com");
-                        };
-
-                    scene.appendChild(placeText);
+                    scene.appendChild(text);
                 });
             })
     },
