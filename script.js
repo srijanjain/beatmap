@@ -1,25 +1,25 @@
 const loadPlaces = function (coords) {
     // COMMENT FOLLOWING LINE IF YOU WANT TO USE STATIC DATA AND ADD COORDINATES IN THE FOLLOWING 'PLACES' ARRAY
-    // const method = 'api';
+    const method = 'api';
 
-//     const PLACES = [
-//         {
-//             name: "Your place name",
-//             location: {
-//                 lat: 0, // add here latitude if using static data
-//                 lng: 0, // add here longitude if using static data
-//             }
-//         },
-//     ];
+    const PLACES = [
+        {
+            name: "Your place name",
+            location: {
+                lat: 0, // add here latitude if using static data
+                lng: 0, // add here longitude if using static data
+            }
+        },
+    ];
 
-//     if (method === 'api') {
-//         return loadPlaceFromAPIs(coords);
-//     }
+    if (method === 'api') {
+        return loadPlaceFromAPIs(coords);
+    }
 
-//     return Promise.resolve(PLACES);
-// };
+    return Promise.resolve(PLACES);
+};
 
-// getting places from REST APIs
+getting places from REST APIs
 function loadPlaceFromAPIs(position) {
     const params = {
         radius: 300,    // search places not farther than this value (in meters)
