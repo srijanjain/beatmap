@@ -69,7 +69,7 @@ window.onload = () => {
                     const text = document.createElement('a-link');
                     text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
                     text.setAttribute('title', place.name);
-                    text.setAttribute('href', 'https://www.google.com/');
+                    text.setAttribute('href', 'https://srijanja.in/BeatMapMusic/index.html');
                     text.setAttribute('scale', '25 25 25');
                     text.addEventListener('loaded', () => {
                         window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
