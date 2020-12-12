@@ -70,7 +70,7 @@ window.onload = () => {
           text.setAttribute("title", place.name);
           text.setAttribute(
             "href",
-            "https://srijanja.in/BeatMapMusic/index.html"
+            "https://srijanja.in/BeatMap/BeatMapMusic/index.html"
           );
           text.setAttribute("scale", "25 25 25");
           text.addEventListener("loaded", () => {
