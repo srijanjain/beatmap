@@ -164,10 +164,6 @@ function playDrums() {
   document.getElementById('btnDrums').classList.add('drums');
 }
 
-function showHelp() {
-  const helpBox = document.getElementById('help');
-  helpBox.hidden = !helpBox.hidden;
-}
 
 function autoDrums() {
   const btn = document.getElementById('btnAuto');
