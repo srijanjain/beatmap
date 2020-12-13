@@ -60,6 +60,9 @@ window.onload = () => {
         places.forEach((place) => {
           const latitude = place.location.lat;
           const longitude = place.location.lng;
+          //77.23,88.55 as a string (key)=> string(value) 
+          console.log(longitude);
+          console.log(latitude);
 
           // add place name
           const text = document.createElement("a-link");
