@@ -10,35 +10,35 @@ body {
   font-family: monospace;
   margin: 1em;
   text-align: center;
-  --pink: #E61E8C;
-  --blue: #4DEEEA;
-  --purple: #2A298B;
-  --yellow: #FFED5E;
-  --green: #74EE16;
-  
+  --pink: #e61e8c;
+  --blue: #4deeea;
+  --purple: #2a298b;
+  --yellow: #ffed5e;
+  --green: #74ee16;
+  background-color: #1db954;
   font-size: 14px;
   color: var(--purple);
   position: relative;
 }
 
 h1 {
-  font-family: 'Monoton', monospace;
-  font-weight: normal;
+  font-family: Helvetica;
+  font-weight: bold;
   font-size: 60px;
-  color: var(--pink);
+  color: white;
   margin: 0;
-  text-shadow: -4px 4px 0 var(--blue);
+  /* text-shadow: -4px 4px 0 black; */
 }
 
 h2 {
-  font-family: "Press Start 2P", "Helvetica Neue", helvetica, arial, sans-serif;
+  font-family: "Helvetica Neue", helvetica, arial, sans-serif;
   font-weight: normal;
   font-size: 16px;
 }
 
 h3 {
   display: inline-block;
-  font-family: "Press Start 2P", "Helvetica Neue", helvetica, arial, sans-serif;
+  font-family: "Helvetica Neue", helvetica, arial, sans-serif;
   font-weight: normal;
   font-size: 16px;
   vertical-align: middle;
@@ -46,13 +46,14 @@ h3 {
 
 footer {
   text-align: center;
-  padding: 14px; 
+  padding: 14px;
   margin: 24px auto;
-  border-top: 4px solid var(--blue);
+  /* border-top: 4px solid var(--blue); */
   max-width: 500px;
 }
 
-a:link, a:visited {
+a:link,
+a:visited {
   font-weight: bold;
   color: var(--pink);
 }
@@ -64,21 +65,21 @@ a:link, a:visited {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none;  
+  user-select: none;
 }
 
 /* Thank you Glitch for these styles!! */
 .glitcheroni {
-  font-family: "Press Start 2P", "Helvetica Neue", helvetica, arial, sans-serif;
+  font-family: "Helvetica Neue", helvetica, arial, sans-serif;
   text-align: left;
   font-size: 14px;
   font-weight: 600;
-  border: solid var(--purple) 2px;
-  color: var(--purple);
+  /* border: solid var(--purple) 2px; */
+  color: white;
   border-radius: 5px;
-  background: white;
-  -webkit-box-shadow: 4px 4px 0 var(--purple);
-  box-shadow: 4px 4px 0 var(--purple);
+  background: black;
+  /* -webkit-box-shadow: 4px 4px 0 var(--purple); */
+  /* box-shadow: 4px 4px 0 var(--purple); */
 }
 
 .dialog {
@@ -110,7 +111,6 @@ a:link, a:visited {
   margin: 4px;
 }
 
-
 [disabled] {
   opacity: 0.5;
   pointer-events: none;
@@ -130,22 +130,22 @@ a:link, a:visited {
 }
 
 button.controls:hover {
-  background-color: var(--yellow) !important;
-  -webkit-box-shadow: 2px 2px 0 var(--purple);
-  box-shadow: 2px 2px 0 var(--purple);
+  background-color: gray !important;
+  /* -webkit-box-shadow: 2px 2px 0 var(--purple); */
+  /* box-shadow: 2px 2px 0 var(--purple); */
 }
 
 button.controls.synth {
-  background-color: var(--pink);
+  background-color: gray;
   color: white;
 }
 
 button.controls.drums {
-  background-color: var(--blue);
+  background-color: gray;
 }
 
 #btnPlay {
-  background-color: var(--green);
+  background-color: grey;
 }
 
 /***********************
@@ -154,7 +154,7 @@ button.controls.drums {
 button.pixel {
   display: inline-block;
   -webkit-appearance: none;
-  -webkit-border-radius:0px;
+  -webkit-border-radius: 0px;
   appearance: none;
   font-size: inherit;
   line-height: inherit;
@@ -162,7 +162,7 @@ button.pixel {
   cursor: pointer;
   margin: 2px;
   font-family: monospace;
-  background: var(--yellow);
+  background: whitesmoke;
   height: 25px;
   width: 25px;
   border: none;
@@ -175,13 +175,13 @@ button.pixel:hover {
 }
 
 button.pixel.on.synth {
-  background: var(--pink);
+  background: darkgreen;
   xbox-shadow: 0 0 5px var(--pink);
 }
 
 button.pixel.on.drums {
-  background: var(--blue);
-  xbox-shadow: 0 0 5px var(--blue);
+  background: greenyellow;
+  /* xbox-shadow: 0 0 5px var(--blue); */
 }
 
 button.pixel.ripple.synth {
@@ -198,11 +198,11 @@ button.pixel.ripple.drums {
 
 .playing .pixel.on.active {
   transform: scale(1.5);
-  z-index:10;
+  z-index: 10;
 }
 
 .playing .bar {
-  background: var(--green) !important; 
+  background: black !important;
   opacity: 1 !important;
 }
 
@@ -236,7 +236,7 @@ button.pixel.ripple.drums {
     font-size: 13px;
   }
   .glitcheroni {
-   font-size: 8px; 
+    font-size: 8px;
   }
   button.pixel {
     height: calc(80vw / 20);
